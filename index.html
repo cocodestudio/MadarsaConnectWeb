@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madarsa Connect - Your Digital Madarsa</title>
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* --- CSS STYLES --- */
+        :root {
+            --primary-color: #B91C1C;
+            --primary-hover: #991B1B;
+            --secondary-color: #111827;
+            --text-light: #F9FAFB;
+            --text-muted: #6B7280;
+            --background-light: #FFFFFF;
+            --background-offwhite: #F9FAFB;
+            --border-color: #E5E7EB;
+        }
+
+        /* --- Global Reset & Base Styles --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-offwhite);
+            color: var(--secondary-color);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .page-content {
+            display: none;
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        section {
+            padding: 100px 0;
+            overflow: hidden;
+        }
+
+        .page-section {
+            padding-top: 120px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .section-title p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* --- Animations --- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* --- Header / Navigation --- */
+        .header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 20px 0;
+            transition: background-color 0.3s ease, padding 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .header.scrolled {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 15px 0;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary-color);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary-color);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.8rem;
+        }
+
+        /* --- Hero Section --- */
+        #home {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background-color: var(--background-offwhite);
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .hero-text {
+            max-width: 50%;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .hero-text .tagline {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin: 10px 0 20px;
+            font-weight: 500;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .play-store-btn {
+            display: inline-block;
+            background: #000;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+
+        .play-store-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .play-store-btn .fab {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        .hero-image {
+            max-width: 45%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image-shape {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(45deg, var(--primary-color), #fca5a5);
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            animation: morph 8s ease-in-out infinite;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .hero-image-shape {
+            width: 350px;
+            height: 350px;
+            background-image: url('https://firebasestorage.googleapis.com/v0/b/madarsaconnect-c96d3.firebasestorage.app/o/WhatsApp%20Image%202025-10-08%20at%2016.12.29_11aba985.jpg?alt=media&token=cb44f05f-8949-4f6e-9774-bde41070c271');
+            background-size: cover;
+            background-position: center;
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            animation: morph 8s ease-in-out infinite;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes morph {
+            0% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
+
+            50% {
+                border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+            }
+
+            100% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
+        }
+
+        /* --- Features Section --- */
+        #features {
+            background: var(--background-light);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: var(--background-offwhite);
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.07);
+        }
+
+        .feature-card .icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+        }
+
+        /* --- About Section (Page) --- */
+        #about-page {
+            padding: 120px 0 0 0;
+        }
+
+        .about-hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--text-light);
+            text-align: center;
+            padding: 120px 24px;
+        }
+
+        .about-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+        }
+
+        .about-story {
+            padding: 100px 0;
+            background: var(--background-light);
+            position: relative;
+        }
+
+        .about-story::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--background-offwhite);
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+            z-index: 0;
+        }
+
+        .story-item {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+            margin-bottom: 100px;
+            position: relative;
+        }
+
+        .story-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .story-content {
+            flex: 1;
+        }
+
+        .story-content .tag {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .story-content h3 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+        }
+
+        .story-content p {
+            color: var(--text-muted);
+        }
+
+        .story-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .story-image i {
+            font-size: 8rem;
+            color: var(--primary-color);
+            opacity: 0.1;
+        }
+
+        .dev-profile {
+            background-color: var(--background-light);
+            padding: 80px 0;
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            background: var(--background-light);
+            padding: 50px;
+            border-radius: 16px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .about-image {
+            width: 600px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-text h3 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .about-text p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .social-links a {
+            color: var(--secondary-color);
+            font-size: 1.8rem;
+            margin-right: 20px;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- Support & Request Forms --- */
+        #support,
+        #request-page {
+            background: var(--background-light);
+        }
+
+        .support-form,
+        .request-form {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.2);
+        }
+
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        #form-message,
+        #request-form-message {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: 500;
+        }
+
+        /* --- Privacy Section (Page) --- */
+        #privacy-page {
+            padding-top: 150px;
+        }
+
+        .privacy-content {
+            background: var(--background-light);
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            line-height: 1.8;
+        }
+
+        .privacy-content h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-top: 25px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .privacy-content h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .privacy-content ul {
+            padding-left: 20px;
+        }
+
+        /* --- Footer --- */
+        .footer {
+            background-color: var(--secondary-color);
+            color: var(--text-light);
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .footer p {
+            color: var(--text-muted);
+        }
+
+        .footer .social-links a {
+            color: var(--text-light);
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background-color: var(--background-light);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 40px;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+                transition: right 0.4s ease-in-out;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hero-content {
+                flex-direction: column-reverse;
+                text-align: center;
+                margin-top: 80px;
+            }
+
+            .hero-text,
+            .hero-image {
+                max-width: 100%;
+            }
+
+            .hero-text h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero-image-shape {
+                width: 280px;
+                height: 280px;
+            }
+
+            .about-content,
+            .story-item,
+            .story-item:nth-child(even) {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .section-title h2,
+            .about-hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .story-content h3 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header class="header" id="header">
+        <div class="container navbar">
+            <a class="logo" data-page="main-page">
+                <img src="https://firebasestorage.googleapis.com/v0/b/madarsaconnect-c96d3.firebasestorage.app/o/converted-logo.png?alt=media&token=90db044c-ab1d-481e-a983-e7804d195194"
+                    alt="MadarsaConnect Logo" class="logo-img">
+                MadarsaConnect
+            </a>
+            <ul class="nav-links" id="nav-links">
+                <li><a class="nav-item" data-page="main-page" data-scroll-to="features">Features</a></li>
+                <li><a class="nav-item" data-page="about-page">About</a></li>
+                <li><a class="nav-item" data-page="main-page" data-scroll-to="support">Support</a></li>
+                <li><a class="nav-item" data-page="privacy-page">Privacy</a></li>
+                <li><a class="nav-item" data-page="request-page">Request</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Main Page Content -->
+        <div id="main-page" class="page-content active">
+            <section id="home">
+                <div class="container hero-content">
+                    <div class="hero-text fade-in">
+                        <h1>Digitize Your Institution with Madarsa Connect</h1>
+                        <p class="tagline">Your Digital Madarsa.</p>
+                        <p>The ultimate all-in-one platform to streamline management, enhance communication, and bring
+                            your educational institute into the digital age.</p>
+                        <a href="https://play.google.com/store/apps/details?id=com.cocode.madarsaconnect"
+                            class="play-store-btn">
+                            <i class="fab fa-google-play"></i> Get it on Google Play
+                        </a>
+                    </div>
+                    <div class="hero-image fade-in">
+                        <div class="hero-image-shape"></div>
+                    </div>
+                </div>
+            </section>
+            <section id="features">
+                <div class="container">
+                    <div class="section-title fade-in">
+                        <h2>Everything You Need, All in One Place</h2>
+                        <p>From attendance to analytics, Madarsa Connect offers a powerful suite of tools designed for
+                            efficiency and growth.</p>
+                    </div>
+                    <div class="features-grid">
+                        <div class="feature-card fade-in">
+                            <div class="icon"><i class="fas fa-user-check"></i></div>
+                            <h3>Smart Attendance</h3>
+                            <p>Digitize and track student attendance in seconds, reducing manual effort and paperwork.
+                            </p>
+                        </div>
+                        <div class="feature-card fade-in">
+                            <div class="icon"><i class="fas fa-wallet"></i></div>
+                            <h3>Fee Management</h3>
+                            <p>Securely collect fees online, track pending dues, and manage financial records
+                                effortlessly.</p>
+                        </div>
+                        <div class="feature-card fade-in">
+                            <div class="icon"><i class="fas fa-chart-line"></i></div>
+                            <h3>Powerful Analytics</h3>
+                            <p>Get a 360-degree view of your institution's performance with insightful data and reports.
+                            </p>
+                        </div>
+                        <div class="feature-card fade-in">
+                            <div class="icon"><i class="fas fa-pen-to-square"></i></div>
+                            <h3>Quiz & Exams</h3>
+                            <p>Engage students by creating and assigning quizzes directly through the app.</p>
+                        </div>
+                        <div class="feature-card fade-in">
+                            <div class="icon"><i class="fas fa-bullhorn"></i></div>
+                            <h3>Instant Notifications</h3>
+                            <p>Keep everyone informed with real-time announcements, reminders, and updates.</p>
+                        </div>
+                        <div class="feature-card fade-in">
+                            <div class="icon"><i class="fas fa-shield-halved"></i></div>
+                            <h3>Secure & Reliable</h3>
+                            <p>Built on a robust platform to ensure your data is always safe, secure, and accessible.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="support">
+                <div class="container">
+                    <div class="section-title fade-in">
+                        <h2>People Supports</h2>
+                        <p>Have a question or feedback? We'd love to hear from you. Fill out the form below to get in
+                            touch with us.</p>
+                    </div>
+                    <form class="support-form fade-in" id="support-form" action="https://formspree.io/f/xyznnqpe"
+                        method="POST">
+
+                        <div class="form-group">
+                            <input type="text" id="name" name="Name" placeholder="Your Name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" id="email" name="Email" placeholder="Your Email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <textarea id="message" name="Message" rows="5" placeholder="Your Message"
+                                required></textarea>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Send Message</button>
+                        <p id="form-message"></p>
+
+                    </form>
+                </div>
+            </section>
+        </div>
+
+        <!-- About Page Content -->
+        <div id="about-page" class="page-content">
+            <section class="about-hero fade-in">
+                <h1>Our Mission: To Empower Education Through Technology</h1>
+            </section>
+            <section class="about-story">
+                <div class="container">
+                    <div class="story-item">
+                        <div class="story-content slide-in-left">
+                            <p class="tag">THE VISION</p>
+                            <h3>Bridging the Gap Between Tradition and Technology</h3>
+                            <p>Madarsa Connect was born from a simple yet powerful idea: to bring the benefits of modern
+                                technology to traditional educational institutions. We saw dedicated educators and
+                                administrators burdened by manual paperwork and disconnected communication systems. Our
+                                vision was to create a platform that respects tradition while embracing the efficiency
+                                and connectivity of the digital age, making management simple, transparent, and
+                                accessible for everyone.</p>
+                        </div>
+                        <div class="story-image slide-in-right"><i class="fas fa-lightbulb"></i></div>
+                    </div>
+                    <div class="story-item">
+                        <div class="story-content slide-in-right">
+                            <p class="tag">THE JOURNEY</p>
+                            <h3>From a Single Line of Code to a Complete Ecosystem</h3>
+                            <p>What started as a personal project quickly grew into a full-fledged management ecosystem.
+                                Every feature, from Smart Attendance to Fee Management, has been designed with direct
+                                feedback from educators. Countless hours were spent refining the user experience to
+                                ensure the app is not just powerful, but also intuitive and easy to use for teachers,
+                                administrators, and students alike. This journey is a testament to our commitment to
+                                solving real-world problems with thoughtful technology.</p>
+                        </div>
+                        <div class="story-image slide-in-left"><i class="fas fa-code"></i></div>
+                    </div>
+                </div>
+            </section>
+            <section class="dev-profile">
+                <div class="container">
+                    <div class="about-content fade-in">
+                        <img src="https://firebasestorage.googleapis.com/v0/b/madarsaconnect-c96d3.firebasestorage.app/o/WhatsApp%20Image%202025-10-03%20at%2019.32.43_52b1d178.jpg?alt=media&token=142af530-fa37-4771-ba00-d81e3a5b2135"
+                            alt="Developer Photo" class="about-image">
+                        <div class="about-text">
+                            <h3>Moh Abuzar</h3>
+                            <p>Hi, I'm Mohabuzar, a passionate developer dedicated to creating solutions that make a
+                                real-world impact. Madarsa Connect is the culmination of my vision to empower
+                                educational institutions. My goal is to continuously evolve this platform, adding
+                                features that truly matter to the community. I hope this app brings immense value to
+                                your institution.</p>
+                            <div class="social-links">
+                                <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                <a href="https://github.com/Mohabuzar" target="_blank"><i class="fab fa-github"></i></a>
+                                <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Privacy Page Content -->
+        <div id="privacy-page" class="page-content">
+            <section class="page-section">
+                <div class="container">
+                    <div class="section-title fade-in">
+                        <h2>Privacy Policy</h2>
+                        <p>Your trust is paramount. This policy details our commitment to protecting your data.</p>
+                    </div>
+                    <div class="privacy-content fade-in">
+                        <p><strong>Last Updated: October 12, 2025</strong></p>
+                        <h3>1. Introduction</h3>
+                        <p>Welcome to Madarsa Connect ("the App"). This Privacy Policy explains how we collect, use,
+                            disclose, and safeguard your information when you use our application. This policy applies
+                            to all users, including Heads (Admins), Faculty (Teachers), and Students. By using the App,
+                            you agree to the collection and use of information in accordance with this policy.</p>
+
+                        <h3>2. Information We Collect</h3>
+                        <p>To provide a functional and personalized experience, we may collect several types of
+                            information:</p>
+                        <h4>2.1. Data You Provide to Us</h4>
+                        <ul>
+                            <li><strong>Personal Identification Information:</strong> When you register an account, we
+                                collect your full name, email address, phone number, date of birth, and gender.</li>
+                            <li><strong>Profile Information:</strong> You may voluntarily provide a profile photo to
+                                personalize your account.</li>
+                            <li><strong>Communication Data:</strong> If you contact us for support, we may collect the
+                                contents of your message and your contact details to resolve your query.</li>
+                        </ul>
+                        <h4>2.2. Data We Collect Automatically</h4>
+                        <ul>
+                            <li><strong>Academic & Usage Information:</strong> We collect data related to your role,
+                                such as course details, attendance records, marks, quiz submissions, and fee payment
+                                history.</li>
+                            <li><strong>Device Information:</strong> We collect your device's Firebase Cloud Messaging
+                                (FCM) token to send you essential push notifications regarding announcements, fee
+                                reminders, or new quizzes.</li>
+                        </ul>
+
+                        <h3>3. How We Use Your Information</h3>
+                        <p>We use the collected data for various purposes:</p>
+                        <ul>
+                            <li>To provide, operate, and maintain our App.</li>
+                            <li>To manage your account and provide you with customer support.</li>
+                            <li>To process transactions, such as fee payments.</li>
+                            <li>To send you important administrative information, such as updates, security alerts, and
+                                support messages.</li>
+                            <li>To monitor and analyze usage to improve the App's functionality and user experience.
+                            </li>
+                        </ul>
+
+                        <h3>4. Data Storage and Security</h3>
+                        <p>Your information is securely stored on Google Firebase, a trusted and robust cloud platform.
+                            We implement a variety of security measures, including data encryption and secure access
+                            protocols, to maintain the safety of your personal information. While we strive to use
+                            commercially acceptable means to protect your data, no method of transmission over the
+                            Internet or method of electronic storage is 100% secure.</p>
+
+                        <h3>5. Data Sharing and Disclosure</h3>
+                        <p>We do not sell, trade, or otherwise transfer your personally identifiable information to
+                            outside parties. This does not include:</p>
+                        <ul>
+                            <li><strong>Within Your Institution:</strong> Information is shared based on user roles
+                                (e.g., a teacher can view their students' attendance, but not another teacher's).</li>
+                            <li><strong>Trusted Third Parties:</strong> We may share data with service providers who
+                                assist us in operating our App (like Google Firebase and payment gateways), so long as
+                                those parties agree to keep this information confidential.</li>
+                            <li><strong>Legal Requirements:</strong> We may disclose your information if required to do
+                                so by law or in response to valid requests by public authorities.</li>
+                        </ul>
+
+                        <h3>6. Children's Privacy</h3>
+                        <p>Our service is designed for educational institutions which may include children. We are in
+                            compliance with the requirements of child privacy policies. We do not knowingly collect any
+                            personally identifiable information from children under the age of 13 without verifiable
+                            parental or institutional consent. If you believe we have collected such information, please
+                            contact us immediately so we can take necessary steps.</p>
+
+                        <h3>7. Your Rights and Choices</h3>
+                        <p>You have the right to access, update, or correct your personal information through your
+                            in-app profile settings. For complete data deletion requests, please contact your
+                            institution's administrator or reach out to us directly through our support channels.</p>
+
+                        <h3>8. Contact Us</h3>
+                        <p>If you have any questions or concerns about this Privacy Policy, please contact us at:
+                            <strong>madarsaconnect.org@gmail.com</strong>
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Request for Deletion Page Content -->
+        <div id="request-page" class="page-content">
+            <section class="page-section">
+                <div class="container">
+                    <div class="section-title fade-in">
+                        <h2>Account Deletion Request</h2>
+                        <p>We're sorry to see you go. Please fill out the form below to request the permanent deletion
+                            of your account.</p>
+                    </div>
+                    <form class="request-form fade-in" id="request-form" action="https://formspree.io/f/movkkoll"
+                        method="POST">
+
+                        <div class="form-group">
+                            <input type="text" id="request-name" name="Full Name" placeholder="Full Name (as in app)"
+                                required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" id="request-id" name="User ID" placeholder="Student/Faculty/Head ID"
+                                required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" id="request-email" name="Email" placeholder="Registered Email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="tel" id="request-phone" name="Phone Number"
+                                placeholder="Registered Phone Number" required>
+                        </div>
+
+                        <div class="form-group">
+                            <textarea id="request-reason" name="Reason" rows="4"
+                                placeholder="Reason for leaving (Optional)"></textarea>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Submit Deletion Request</button>
+                        <p id="request-form-message"></p>
+
+                    </form>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container">
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/moh-abuzar-6a880b30b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                    target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/cocodestudio" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.instagram.com/emir_abuzar?igsh=MTByOXdkaHE3MnJ4eQ==" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p>&copy; 2025 MadarsaConnect. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const header = document.getElementById('header');
+            const navLinks = document.getElementById('nav-links');
+            const hamburger = document.getElementById('hamburger');
+            const navItems = document.querySelectorAll('.nav-item, .logo');
+            const pages = document.querySelectorAll('.page-content');
+
+            function showPage(pageId, scrollToId) {
+                pages.forEach(page => page.classList.remove('active'));
+                const activePage = document.getElementById(pageId);
+                if (activePage) activePage.classList.add('active');
+                window.scrollTo(0, 0);
+
+                if (scrollToId) {
+                    setTimeout(() => {
+                        const element = document.getElementById(scrollToId);
+                        if (element) {
+                            const headerOffset = 100;
+                            const elementPosition = element.getBoundingClientRect().top;
+                            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                            window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+                        }
+                    }, 100);
+                }
+            }
+
+            navItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const pageId = item.getAttribute('data-page');
+                    const scrollToId = item.getAttribute('data-scroll-to');
+                    showPage(pageId, scrollToId);
+
+                    document.querySelectorAll('.nav-item').forEach(link => link.classList.remove('active'));
+                    if (item.classList.contains('nav-item')) {
+                        const targetPage = item.getAttribute('data-page');
+                        if (targetPage !== 'main-page' || !item.hasAttribute('data-scroll-to')) {
+                            item.classList.add('active');
+                        }
+                    }
+                    if (navLinks.classList.contains('active')) navLinks.classList.remove('active');
+                });
+            });
+
+            window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 50); });
+            hamburger.addEventListener('click', () => { navLinks.classList.toggle('active'); });
+
+            const animatedElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
+                });
+            }, { threshold: 0.1 });
+            animatedElements.forEach(el => observer.observe(el));
+
+            const supportForm = document.getElementById('support-form');
+            if (supportForm) {
+                const formMessage = document.getElementById('form-message');
+                supportForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    const formData = new FormData(supportForm);
+                    fetch(supportForm.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    }).then(response => {
+                        if (response.ok) {
+                            formMessage.textContent = 'Thank you! We will get back to you soon.';
+                            formMessage.style.color = 'green';
+                            supportForm.reset();
+                            setTimeout(() => { formMessage.textContent = ''; }, 5000);
+                        } else {
+                            formMessage.textContent = 'Oops! There was a problem submitting your form.';
+                            formMessage.style.color = 'red';
+                        }
+                    }).catch(error => {
+                        formMessage.textContent = 'Oops! There was a problem submitting your form.';
+                        formMessage.style.color = 'red';
+                    });
+                });
+            }
+
+            const requestForm = document.getElementById('request-form');
+            if (requestForm) {
+                const formMessage = document.getElementById('request-form-message');
+                requestForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    const formData = new FormData(requestForm);
+                    fetch(requestForm.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    }).then(response => {
+                        if (response.ok) {
+                            formMessage.textContent = 'Your deletion request has been submitted successfully.';
+                            formMessage.style.color = 'green';
+                            requestForm.reset();
+                            setTimeout(() => { formMessage.textContent = ''; }, 5000);
+                        } else {
+                            formMessage.textContent = 'Oops! There was a problem submitting your request.';
+                            formMessage.style.color = 'red';
+                        }
+                    }).catch(error => {
+                        formMessage.textContent = 'Oops! There was a problem submitting your request.';
+                        formMessage.style.color = 'red';
+                    });
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>
