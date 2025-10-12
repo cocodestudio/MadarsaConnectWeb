@@ -441,12 +441,17 @@
         }
 
         .about-image {
-            width: 600px;
-            height: 180px;
+            width: 200px;
+            /* PC par size */
+            height: 200px;
+            /* PC par size */
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid var(--primary-color);
+            /* Photo ko stretch kiye bina fit karta hai */
+            border: 5px solid var(--primary-color);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            flex-shrink: 0;
+            /* Yeh zaroori hai taaki mobile par image shrink na ho */
         }
 
         .about-text h3 {
@@ -615,6 +620,13 @@
 
             .hero-text h1 {
                 font-size: 2.8rem;
+            }
+
+            .about-image {
+                width: 150px;
+                /* Mobile par size */
+                height: 150px;
+                /* Mobile par size */
             }
 
             .hero-image-shape {
@@ -961,7 +973,8 @@
                 <a href="https://www.linkedin.com/in/moh-abuzar-6a880b30b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
                     target="_blank"><i class="fab fa-linkedin"></i></a>
                 <a href="https://github.com/cocodestudio" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://www.instagram.com/emir_abuzar?igsh=MTByOXdkaHE3MnJ4eQ==" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.instagram.com/emir_abuzar?igsh=MTByOXdkaHE3MnJ4eQ==" target="_blank"><i
+                        class="fab fa-instagram"></i></a>
             </div>
             <p>&copy; 2025 MadarsaConnect. All Rights Reserved.</p>
         </div>
