@@ -19,7 +19,6 @@
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-
         gtag('config', 'G-6M80JWZYV6');
     </script>
 
@@ -63,6 +62,15 @@
             background-color: var(--background-offwhite);
             color: var(--text-dark);
             line-height: 1.7;
+            /* Optimization: Prevents FOUC by hiding body until preloader is done */
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s 0.5s, opacity 0.5s linear;
+        }
+
+        body.loaded {
+            visibility: visible;
+            opacity: 1;
         }
 
         .container {
@@ -147,6 +155,8 @@
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            /* Performance Optimization: Hint to browser about upcoming animations */
+            will-change: opacity, transform;
         }
 
         .fade-in.visible {
@@ -185,6 +195,8 @@
             gap: 12px;
             text-decoration: none;
             cursor: pointer;
+            /* Responsiveness: Prevents logo from shrinking too much */
+            flex-shrink: 0;
         }
 
         .logo-img {
@@ -283,17 +295,11 @@
             line-height: 1.2;
         }
 
-        .hero-text .tagline {
-            font-size: clamp(1.2rem, 3vw, 1.5rem);
-            color: var(--primary-color);
-            margin: 10px 0 20px;
-            font-weight: 500;
-        }
-
         .hero-text p {
             font-size: 1.1rem;
             color: var(--text-muted);
             margin-bottom: 30px;
+            max-width: 550px;
         }
 
         .play-store-btn {
@@ -325,7 +331,6 @@
             align-items: center;
         }
 
-        /* --- Aurora Glow Blob Styling --- */
         .blob-container {
             position: relative;
             width: 100%;
@@ -566,7 +571,7 @@
             }
         }
 
-        /* --- Testimonials Section --- */
+        /* --- Testimonials, FAQ, Forms, Other Pages (Condensed for brevity, no logical changes needed here) --- */
         #testimonials {
             background: var(--background-light);
         }
@@ -623,7 +628,6 @@
             color: var(--text-muted);
         }
 
-        /* --- FAQ Section --- */
         #faq {
             background: var(--background-offwhite);
         }
@@ -679,174 +683,6 @@
             transform: rotate(180deg);
         }
 
-        /* --- Blog Page --- */
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-        }
-
-        /* --- Blog Page Section Background (NEW) --- */
-        #blog-page section {
-            background: linear-gradient(160deg, #F9FAFB 0%, #FEF2F2 50%, #F9FAFB 100%);
-        }
-
-        .blog-card {
-            background: linear-gradient(170deg, #FFFFFF 0%, #F9FAFB 70%, #FEF2F2 100%);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .blog-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .blog-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .blog-card-content {
-            padding: 25px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .blog-card-content h3 {
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-        }
-
-        .blog-card-content p {
-            color: var(--text-muted);
-            margin-bottom: 20px;
-            flex-grow: 1;
-        }
-
-        .blog-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-top: auto;
-        }
-
-        .read-more {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        /* --- Blog Modal (NEW) --- */
-        .blog-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            backdrop-filter: blur(5px);
-        }
-
-        .blog-modal-overlay.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .blog-modal {
-            background: var(--background-light);
-            width: 90%;
-            max-width: 800px;
-            max-height: 90vh;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            transform: scale(0.95);
-            transition: transform 0.3s ease;
-        }
-
-        .blog-modal-overlay.visible .blog-modal {
-            transform: scale(1);
-        }
-
-        .blog-modal-header {
-            position: relative;
-            height: 250px;
-        }
-
-        .blog-modal-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .blog-modal-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background 0.3s;
-        }
-
-        .blog-modal-close:hover {
-            background: rgba(0, 0, 0, 0.8);
-        }
-
-        .blog-modal-content {
-            padding: 30px;
-            overflow-y: auto;
-        }
-
-        .blog-modal-content h2 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: var(--secondary-color);
-        }
-
-        .blog-modal-meta {
-            color: var(--text-muted);
-            margin-bottom: 20px;
-            font-size: 0.9rem;
-        }
-
-        .blog-modal-body {
-            line-height: 1.8;
-            color: var(--text-dark);
-        }
-
-        .blog-modal-body p {
-            margin-bottom: 15px;
-        }
-
-        /* --- Other Pages --- */
         #support,
         #request-page {
             background: var(--background-light);
@@ -1047,17 +883,16 @@
             color: var(--primary-color);
         }
 
+        #privacy-page section {
+            background: linear-gradient(170deg, #FFFFFF 0%, #F9FAFB 70%, #FEF2F2 100%);
+        }
+
         .privacy-content {
             background: var(--background-light);
             padding: 40px;
             border-radius: 12px;
             border: 1px solid var(--border-color);
             line-height: 1.8;
-        }
-
-        /* --- Privacy Page Section Background (NEW) --- */
-        #privacy-page section {
-            background: linear-gradient(170deg, #FFFFFF 0%, #F9FAFB 70%, #FEF2F2 100%);
         }
 
         .privacy-content h3 {
@@ -1078,6 +913,171 @@
 
         .privacy-content ul {
             padding-left: 20px;
+        }
+
+        /* --- Blog Page & Modal --- */
+        #blog-page section {
+            background: linear-gradient(160deg, #F9FAFB 0%, #FEF2F2 50%, #F9FAFB 100%);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .blog-card {
+            background: linear-gradient(170deg, #FFFFFF 0%, #F9FAFB 70%, #FEF2F2 100%);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .blog-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .blog-card-content {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .blog-card-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .blog-card-content p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+
+        .read-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .blog-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .blog-modal-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .blog-modal {
+            background: var(--background-light);
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .blog-modal-overlay.visible .blog-modal {
+            transform: scale(1);
+        }
+
+        .blog-modal-header {
+            position: relative;
+            height: 250px;
+        }
+
+        .blog-modal-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .blog-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .blog-modal-close:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .blog-modal-content {
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .blog-modal-content h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+
+        .blog-modal-meta {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .blog-modal-body {
+            line-height: 1.8;
+            color: var(--text-dark);
+        }
+
+        .blog-modal-body p {
+            margin-bottom: 15px;
         }
 
         /* --- Footer --- */
@@ -1194,6 +1194,11 @@
                 text-align: center;
             }
 
+            .hero-text p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
             .hero-content {
                 flex-direction: column-reverse;
                 margin-top: 40px;
@@ -1221,11 +1226,15 @@
                 font-size: 2.2rem;
             }
 
+            /* Mobile Navigation Menu */
             .nav-links {
                 position: fixed;
                 top: 0;
                 right: -100%;
+                /* Start off-screen */
                 width: 80%;
+                max-width: 300px;
+                /* Max width for larger phones */
                 height: 100vh;
                 background-color: var(--background-light);
                 flex-direction: column;
@@ -1256,9 +1265,11 @@
                 text-align: center;
             }
 
+            /* Responsiveness: Show hero image on mobile but smaller */
             .hero-image {
                 display: block;
                 max-width: 300px;
+                flex-basis: auto;
             }
 
             .hero-text h1 {
@@ -1314,6 +1325,7 @@
 </head>
 
 <body>
+    <!-- Preloader to prevent laggy feel on load -->
     <div id="preloader">
         <div class="loader"></div>
     </div>
@@ -1322,7 +1334,7 @@
         <div class="container navbar">
             <a class="logo" data-page="main-page">
                 <img src="https://firebasestorage.googleapis.com/v0/b/madarsaconnect-c96d3.firebasestorage.app/o/converted-logo.png?alt=media&token=90db044c-ab1d-481e-a983-e7804d195194"
-                    alt="MadarsaConnect Logo" class="logo-img" loading="lazy">
+                    alt="MadarsaConnect Logo" class="logo-img">
                 <div class="logo-text-wrapper">
                     <span class="logo-name">MadarsaConnect</span>
                     <span class="logo-tagline">Your digital madarsa</span>
@@ -1708,8 +1720,7 @@
                             institution's administrator or reach out to us directly through our support channels.</p>
                         <h3>8. Contact Us</h3>
                         <p>If you have any questions or concerns about this Privacy Policy, please contact us at:
-                            <strong>madarsaconnect.org@gmail.com</strong>
-                        </p>
+                            <strong>madarsaconnect.org@gmail.com</strong></p>
                     </div>
                 </div>
             </section>
@@ -1752,6 +1763,7 @@
                         </p>
                     </div>
                     <div class="blog-grid">
+                        <!-- Blog cards remain the same, lazy loading is added to images -->
                         <div class="blog-card fade-in">
                             <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=2070&auto=format&fit=crop"
                                 alt="Parent and teacher collaborating on a tablet" loading="lazy">
@@ -1862,6 +1874,8 @@
                         <li><a class="nav-item" data-page="blog-page">Blog</a></li>
                         <li><a class="nav-item" data-page="main-page" data-scroll-to="faq">FAQ</a></li>
                         <li><a class="nav-item" data-page="privacy-page">Privacy Policy</a></li>
+                        <!-- Improvement: Added Request Deletion Link -->
+                        <li><a class="nav-item" data-page="request-page">Request Deletion</a></li>
                     </ul>
                 </div>
                 <div class="footer-contact">
@@ -1888,7 +1902,7 @@
 
     <button id="back-to-top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
 
-    <!-- Blog Modal Structure (NEW) -->
+    <!-- Blog Modal Structure -->
     <div id="blog-modal-overlay" class="blog-modal-overlay">
         <div id="blog-modal" class="blog-modal">
             <div class="blog-modal-header">
@@ -1903,6 +1917,7 @@
         </div>
     </div>
 
+    <!-- Hidden div for blog post content -->
     <div id="blog-post-data" style="display:none;">
         <div data-postid="1">
             <p>In today's fast-paced world, building a strong and consistent bridge between an educational institute and
@@ -2074,9 +2089,9 @@
                 game-like elements, you can transform a routine review session into an exciting challenge. Features
                 within the Madarsa Connect app, such as setting timers for quizzes, displaying scores immediately upon
                 completion, and using a variety of interactive question formats, tap into students' natural desire for
-                achievement and friendly competition. This "gamified" approach makes the process of learning and
-                self-assessment genuinely fun, which can significantly increase student motivation and participation,
-                especially for topics that are traditionally considered dry or difficult.</p>
+                achievement and friendly competition. This "gamified" approach to learning and self-assessment genuinely
+                fun, which can significantly increase student motivation and participation, especially for topics that
+                are traditionally considered dry or difficult.</p>
             <p><strong>Using Data as a Compass for Your Teaching:</strong> Every quiz taken on the platform becomes a
                 rich source of actionable data. After the class completes an assessment, teachers can access an
                 analytics dashboard that provides a clear overview of the results. This dashboard can highlight which
@@ -2090,6 +2105,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // --- CACHE DOM ELEMENTS ---
+            const body = document.body;
             const header = document.getElementById('header');
             const navLinksContainer = document.getElementById('nav-links');
             const navItems = document.querySelectorAll('.nav-item, .logo, .footer-links a, .footer-contact a');
@@ -2100,14 +2117,22 @@
             const backToTopBtn = document.getElementById('back-to-top');
             const allSections = document.querySelectorAll('#main-page section[id]');
 
-            window.onload = () => preloader.classList.add('hidden');
+            // --- PRELOADER LOGIC ---
+            // Use window.onload to ensure all assets (images, etc.) are loaded
+            window.onload = () => {
+                preloader.classList.add('hidden');
+                // Add 'loaded' class to body to fade it in smoothly after preloader is gone
+                body.classList.add('loaded');
+            };
 
+            // --- PAGE NAVIGATION ---
             function showPage(pageId, scrollToId) {
                 pages.forEach(p => p.classList.remove('active'));
                 const activePage = document.getElementById(pageId);
                 if (activePage) activePage.classList.add('active');
 
                 if (scrollToId) {
+                    // Use a small timeout to ensure the page is visible before scrolling
                     setTimeout(() => {
                         const element = document.getElementById(scrollToId);
                         if (element) {
@@ -2123,13 +2148,15 @@
                 closeMobileMenu();
             }
 
+            // --- ACTIVE LINK HIGHLIGHTING ---
             function updateActiveNavLink(pageId, scrollToId) {
                 document.querySelectorAll('.nav-item').forEach(link => {
                     link.classList.remove('active');
                     const linkPage = link.getAttribute('data-page');
                     const linkScroll = link.getAttribute('data-scroll-to');
                     if (linkPage === pageId && (!linkScroll || linkScroll === scrollToId)) {
-                        if (link.parentElement.parentElement.id === 'nav-links') { // Only highlight header links
+                        // Only highlight header links
+                        if (link.closest('#header')) {
                             link.classList.add('active');
                         }
                     }
@@ -2139,10 +2166,13 @@
             navItems.forEach(item => {
                 item.addEventListener('click', (e) => {
                     e.preventDefault();
-                    showPage(item.getAttribute('data-page'), item.getAttribute('data-scroll-to'));
+                    const page = item.getAttribute('data-page');
+                    const scrollTo = item.getAttribute('data-scroll-to');
+                    showPage(page, scrollTo);
                 });
             });
 
+            // --- MOBILE MENU ---
             function closeMobileMenu() {
                 if (navLinksContainer.classList.contains('active')) {
                     navLinksContainer.classList.remove('active');
@@ -2155,14 +2185,20 @@
                 hamburgerIcon.classList.toggle('fa-times');
             });
 
+            // --- URL-BASED PAGE LOADING ---
             const urlParams = new URLSearchParams(window.location.search);
             const pageFromUrl = urlParams.get('page');
-            if (pageFromUrl === 'privacy') showPage('privacy-page');
-            else if (pageFromUrl === 'about') showPage('about-page');
-            else if (pageFromUrl === 'request') showPage('request-page');
-            else if (pageFromUrl === 'blog') showPage('blog-page');
-            else showPage('main-page');
+            const pageMap = {
+                'privacy': 'privacy-page',
+                'about': 'about-page',
+                'request': 'request-page',
+                'blog': 'blog-page'
+            };
+            const initialPage = pageMap[pageFromUrl] || 'main-page';
+            showPage(initialPage);
 
+
+            // --- SCROLL-BASED UI CHANGES ---
             window.addEventListener('scroll', () => {
                 const scrollY = window.scrollY;
                 header.classList.toggle('scrolled', scrollY > 50);
@@ -2178,10 +2214,11 @@
                     });
                     updateActiveNavLink('main-page', currentSectionId);
                 }
-            });
+            }, { passive: true }); // Performance optimization
 
             backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
+            // --- FADE-IN ANIMATION ON SCROLL ---
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -2192,6 +2229,7 @@
             }, { threshold: 0.1 });
             document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
+            // --- FAQ ACCORDION ---
             document.querySelectorAll('.faq-question').forEach(button => {
                 button.addEventListener('click', () => {
                     const item = button.parentElement;
@@ -2203,18 +2241,16 @@
                 });
             });
 
+            // --- GENERIC FORM SUBMISSION HANDLER ---
             function handleFormSubmit(formId, successMessage, errorMessage) {
                 const form = document.getElementById(formId);
                 if (!form) return;
-
                 const submitBtn = form.querySelector('.submit-btn');
                 const messageEl = form.querySelector('p[id$="-message"]');
-
                 form.addEventListener('submit', function (e) {
                     e.preventDefault();
                     submitBtn.classList.add('loading');
                     submitBtn.disabled = true;
-
                     fetch(form.action, {
                         method: 'POST',
                         body: new FormData(form),
@@ -2238,7 +2274,7 @@
             handleFormSubmit('support-form', 'Thank you! We will get back to you soon.', 'Oops! There was a problem.');
             handleFormSubmit('request-form', 'Your deletion request has been submitted.', 'Oops! There was a problem.');
 
-            // --- NEW BLOG MODAL LOGIC ---
+            // --- BLOG MODAL LOGIC ---
             const modalOverlay = document.getElementById('blog-modal-overlay');
             const modalCloseBtn = document.getElementById('modal-close-btn');
             const readMoreLinks = document.querySelectorAll('.read-more');
@@ -2254,7 +2290,6 @@
                 link.addEventListener('click', (e) => {
                     const postId = e.target.getAttribute('data-postid');
                     const postCard = e.target.closest('.blog-card');
-
                     const postImageSrc = postCard.querySelector('img').src;
                     const postTitle = postCard.querySelector('h3').textContent;
                     const postDate = postCard.querySelector('.blog-meta span:first-child').textContent;
@@ -2266,16 +2301,26 @@
                     modal.body.innerHTML = postContent;
 
                     modalOverlay.classList.add('visible');
+                    // Prevent body scroll when modal is open
+                    document.body.style.overflow = 'hidden';
                 });
             });
 
             function closeModal() {
                 modalOverlay.classList.remove('visible');
+                // Restore body scroll
+                document.body.style.overflow = '';
             }
 
             modalCloseBtn.addEventListener('click', closeModal);
             modalOverlay.addEventListener('click', (e) => {
                 if (e.target === modalOverlay) {
+                    closeModal();
+                }
+            });
+            // Close modal on escape key press
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modalOverlay.classList.contains('visible')) {
                     closeModal();
                 }
             });
