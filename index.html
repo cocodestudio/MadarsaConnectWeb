@@ -993,7 +993,20 @@
                 pages.forEach(page => page.classList.remove('active'));
                 const activePage = document.getElementById(pageId);
                 if (activePage) activePage.classList.add('active');
-                window.scrollTo(0, 0);
+
+                // Active nav link ko set karna
+                document.querySelectorAll('.nav-item').forEach(link => {
+                    link.classList.remove('active');
+                    const linkPageId = link.getAttribute('data-page');
+                    const linkScrollId = link.getAttribute('data-scroll-to');
+
+                    // Condition to highlight the correct nav item
+                    if (linkPageId === pageId && (scrollToId ? linkScrollId === scrollToId : !linkScrollId)) {
+                        link.classList.add('active');
+                    } else if (linkPageId === pageId && !scrollToId && !linkScrollId) {
+                        link.classList.add('active');
+                    }
+                });
 
                 if (scrollToId) {
                     setTimeout(() => {
@@ -1005,27 +1018,42 @@
                             window.scrollTo({ top: offsetPosition, behavior: "smooth" });
                         }
                     }, 100);
+                } else {
+                    window.scrollTo(0, 0);
                 }
             }
 
+            // NAVIGATION CLICK HANDLER
             navItems.forEach(item => {
                 item.addEventListener('click', (e) => {
                     e.preventDefault();
                     const pageId = item.getAttribute('data-page');
                     const scrollToId = item.getAttribute('data-scroll-to');
                     showPage(pageId, scrollToId);
-
-                    document.querySelectorAll('.nav-item').forEach(link => link.classList.remove('active'));
-                    if (item.classList.contains('nav-item')) {
-                        const targetPage = item.getAttribute('data-page');
-                        if (targetPage !== 'main-page' || !item.hasAttribute('data-scroll-to')) {
-                            item.classList.add('active');
-                        }
-                    }
                     if (navLinks.classList.contains('active')) navLinks.classList.remove('active');
                 });
             });
 
+            // ** YEH URL CHECK KARNE KA CODE HAI **
+            function checkUrlForPage() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const page = urlParams.get('page');
+                if (page === 'privacy') {
+                    showPage('privacy-page');
+                } else if (page === 'about') {
+                    showPage('about-page');
+                } else if (page === 'request') {
+                    showPage('request-page');
+                } else {
+                    showPage('main-page');
+                }
+            }
+
+            // Page load hote hi URL check karo
+            checkUrlForPage();
+
+
+            // BAAKI KA CODE SAME HAI
             window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 50); });
             hamburger.addEventListener('click', () => { navLinks.classList.toggle('active'); });
 
@@ -1046,9 +1074,7 @@
                     fetch(supportForm.action, {
                         method: 'POST',
                         body: formData,
-                        headers: {
-                            'Accept': 'application/json'
-                        }
+                        headers: { 'Accept': 'application/json' }
                     }).then(response => {
                         if (response.ok) {
                             formMessage.textContent = 'Thank you! We will get back to you soon.';
@@ -1075,9 +1101,7 @@
                     fetch(requestForm.action, {
                         method: 'POST',
                         body: formData,
-                        headers: {
-                            'Accept': 'application/json'
-                        }
+                        headers: { 'Accept': 'application/json' }
                     }).then(response => {
                         if (response.ok) {
                             formMessage.textContent = 'Your deletion request has been submitted successfully.';
